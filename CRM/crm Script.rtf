@@ -1,0 +1,450 @@
+{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\colortbl ;\red255\green0\blue0;}
+{\*\generator Msftedit 5.41.21.2509;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang10\f0\fs22 /*\par
+Created: 26-06-2016\par
+Modified: 26-06-2016\par
+Model: Microsoft SQL Server 2014\par
+Database: MS SQL Server 2014\par
+*/\par
+\par
+\par
+-- Create tables section -------------------------------------------------\par
+\par
+-- Table Ciudad\par
+\par
+CREATE TABLE [Ciudad]\par
+(\par
+ [id_ciudad] Int NOT NULL,\par
+ [nombre] Varchar(50) NOT NULL,\par
+ [estado] Varchar(2) DEFAULT si NOT NULL\par
+)\par
+go\par
+\par
+-- Add keys for table Ciudad\par
+\par
+ALTER TABLE [Ciudad] ADD CONSTRAINT [Key5] PRIMARY KEY ([id_ciudad])\par
+go\par
+\par
+-- Table Comuna\par
+\par
+CREATE TABLE [Comuna]\par
+(\par
+ [id_comuna] Int NOT NULL,\par
+ [id_ciudad] Int NOT NULL,\par
+ [nombre] Varchar(50) NOT NULL,\par
+ [estado] Varchar(2) DEFAULT si NOT NULL\par
+)\par
+go\par
+\par
+-- Create indexes for table Comuna\par
+\par
+CREATE INDEX [IX_Relationship2] ON [Comuna] ([id_ciudad])\par
+go\par
+\par
+-- Add keys for table Comuna\par
+\par
+ALTER TABLE [Comuna] ADD CONSTRAINT [Key4] PRIMARY KEY ([id_comuna])\par
+go\par
+\par
+-- Table Contacto\par
+\par
+CREATE TABLE [Contacto]\par
+(\par
+ [rut_con] Varchar(20) NOT NULL,\par
+ [rut_cli] Varchar(12) NULL,\par
+ [rut_em] Varchar(20) NULL,\par
+ [nombre] Varchar(100) NOT NULL,\par
+ [email] Varchar(100) NOT NULL,\par
+ [descripcion] Varchar(100) NOT NULL,\par
+ [estado] Varchar(2) DEFAULT si NOT NULL\par
+)\par
+go\par
+\par
+-- Create indexes for table Contacto\par
+\par
+CREATE INDEX [IX_Relationship3] ON [Contacto] ([rut_cli])\par
+go\par
+\par
+CREATE INDEX [IX_Relationship10] ON [Contacto] ([rut_em])\par
+go\par
+\par
+-- Add keys for table Contacto\par
+\par
+ALTER TABLE [Contacto] ADD CONSTRAINT [Key3] PRIMARY KEY ([rut_con])\par
+go\par
+\par
+-- Table Empresa\par
+\par
+CREATE TABLE [Empresa]\par
+(\par
+ [rut_em] Varchar(20) NOT NULL,\par
+ [id_comuna] Int NOT NULL,\par
+ [nombre] Varchar(100) NOT NULL,\par
+ [n_fantacia] Varchar(100) NOT NULL,\par
+ [direccion] Varchar(100) NOT NULL,\par
+ [n_direccion] Varchar(10) NOT NULL,\par
+ [email] Varchar(100) NOT NULL,\par
+ [jerarquia] Varchar(1) DEFAULT a NOT NULL,\par
+ [estado] Varchar(2) DEFAULT si NOT NULL\par
+)\par
+go\par
+\par
+-- Create indexes for table Empresa\par
+\par
+CREATE INDEX [IX_Relationship8] ON [Empresa] ([id_comuna])\par
+go\par
+\par
+-- Add keys for table Empresa\par
+\par
+ALTER TABLE [Empresa] ADD CONSTRAINT [Key2] PRIMARY KEY ([rut_em])\par
+go\par
+\par
+-- Table Cliente\par
+\par
+CREATE TABLE [Cliente]\par
+(\par
+ [rut_cli] Varchar(12) NOT NULL,\par
+ [id_comuna] Int NOT NULL,\par
+ [nombre] Varchar(50) NOT NULL,\par
+ [ap_paterno] Varchar(50) NOT NULL,\par
+ [ap_materno] Varchar(50) NOT NULL,\par
+ [direccion] Varchar(100) NOT NULL,\par
+ [n_direccion] Varchar(10) NOT NULL,\par
+ [email] Varchar(100) NOT NULL,\par
+ [jerarquia] Varchar(1) DEFAULT a NOT NULL,\par
+ [estado] Varchar(2) DEFAULT si NOT NULL\par
+)\par
+go\par
+\par
+-- Create indexes for table Cliente\par
+\par
+CREATE INDEX [IX_Relationship1] ON [Cliente] ([id_comuna])\par
+go\par
+\par
+-- Add keys for table Cliente\par
+\par
+ALTER TABLE [Cliente] ADD CONSTRAINT [Key1] PRIMARY KEY ([rut_cli])\par
+go\par
+\par
+-- Table Venta\par
+\par
+CREATE TABLE [Venta]\par
+(\par
+ [n_venta] Int NOT NULL,\par
+ [rut_em] Varchar(20) NULL,\par
+ [rut] Varchar(12) NULL,\par
+ [n_Boleta] Int NULL,\par
+ [n_factura] Int NULL,\par
+ [estado] Varchar(2) DEFAULT si NOT NULL,\par
+ [fecha_compra] Date NOT NULL,\par
+ [tipo_de_pago] Varchar(50) NOT NULL\par
+)\par
+go\par
+\par
+-- Create indexes for table Venta\par
+\par
+CREATE INDEX [IX_Relationship11] ON [Venta] ([rut_em])\par
+go\par
+\par
+CREATE INDEX [IX_Relationship12] ON [Venta] ([rut])\par
+go\par
+\par
+\par
+go\par
+\par
+CREATE INDEX [IX_Relationship17] ON [Venta] ([n_Boleta])\par
+go\par
+\par
+CREATE INDEX [IX_Relationship19] ON [Venta] ([n_factura])\par
+go\par
+\par
+-- Add keys for table Venta\par
+\par
+ALTER TABLE [Venta] ADD CONSTRAINT [Key8] PRIMARY KEY ([n_venta])\par
+go\par
+\par
+-- Table Factura\par
+\par
+CREATE TABLE [Factura]\par
+(\par
+ [n_factura] Int NOT NULL\par
+)\par
+go\par
+\par
+-- Add keys for table Factura\par
+\par
+ALTER TABLE [Factura] ADD CONSTRAINT [Key10] PRIMARY KEY ([n_factura])\par
+go\par
+\par
+-- Table Boleta\par
+\par
+CREATE TABLE [Boleta]\par
+(\par
+ [n_Boleta] Int NOT NULL\par
+)\par
+go\par
+\par
+-- Add keys for table Boleta\par
+\par
+ALTER TABLE [Boleta] ADD CONSTRAINT [Key11] PRIMARY KEY ([n_Boleta])\par
+go\par
+\par
+-- Table Proveedor\par
+\par
+CREATE TABLE [Proveedor]\par
+(\par
+ [id_proveedor] Int NOT NULL,\par
+ [nombre] Varchar(100) NOT NULL,\par
+ [direccion] Varchar(100) NOT NULL,\par
+ [estado] Varchar(2) DEFAULT si NULL\par
+)\par
+go\par
+\par
+-- Add keys for table Proveedor\par
+\par
+ALTER TABLE [Proveedor] ADD CONSTRAINT [Key7] PRIMARY KEY ([id_proveedor])\par
+go\par
+\par
+-- Table Producto\par
+\par
+CREATE TABLE [Producto]\par
+(\par
+ [Id_producto] Int NOT NULL,\par
+ [id_proveedor] Int NULL,\par
+ [nombre] Varchar(50) NOT NULL,\par
+ [precio] Int NOT NULL,\par
+ [stock] Int NOT NULL,\par
+ [estado] Varchar(2) DEFAULT si NOT NULL\par
+)\par
+go\par
+\par
+-- Create indexes for table Producto\par
+\par
+CREATE INDEX [IX_Relationship9] ON [Producto] ([id_proveedor])\par
+go\par
+\par
+-- Add keys for table Producto\par
+\par
+ALTER TABLE [Producto] ADD CONSTRAINT [Key6] PRIMARY KEY ([Id_producto])\par
+go\par
+\par
+-- Table Detalle_venta\par
+\par
+CREATE TABLE [Detalle_venta]\par
+(\par
+ [Id_producto] Int NOT NULL,\par
+ [n_venta] Int NOT NULL,\par
+ [cantidad] Int NOT NULL,\par
+ [precio] Int NOT NULL,\par
+ [estado] Varchar(2) DEFAULT si NOT NULL\par
+)\par
+go\par
+\par
+-- Add keys for table Detalle_venta\par
+\par
+ALTER TABLE [Detalle_venta] ADD CONSTRAINT [Key9] PRIMARY KEY ([Id_producto],[n_venta])\par
+go\par
+\par
+-- Create relationships section ------------------------------------------------- \par
+\par
+ALTER TABLE [Comuna] ADD CONSTRAINT [Relationship2] FOREIGN KEY ([id_ciudad]) REFERENCES [Ciudad] ([id_ciudad]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Empresa] ADD CONSTRAINT [Relationship8] FOREIGN KEY ([id_comuna]) REFERENCES [Comuna] ([id_comuna]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Cliente] ADD CONSTRAINT [Relationship6] FOREIGN KEY ([id_comuna]) REFERENCES [Comuna] ([id_comuna]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Contacto] ADD CONSTRAINT [Relationship10] FOREIGN KEY ([rut_em]) REFERENCES [Empresa] ([rut_em]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Contacto] ADD CONSTRAINT [Relationship3] FOREIGN KEY ([rut_cli]) REFERENCES [Cliente] ([rut_cli]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Venta] ADD CONSTRAINT [Relationship12] FOREIGN KEY ([rut]) REFERENCES [Cliente] ([rut_cli]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Venta] ADD CONSTRAINT [Relationship11] FOREIGN KEY ([rut_em]) REFERENCES [Empresa] ([rut_em]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Detalle_venta] ADD CONSTRAINT [Relationship15] FOREIGN KEY ([n_venta]) REFERENCES [Venta] ([n_venta]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Venta] ADD CONSTRAINT [Relationship17] FOREIGN KEY ([n_Boleta]) REFERENCES [Boleta] ([n_Boleta]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+\pard\ri-874\sa200\sl276\slmult1\tx9514 go\par
+\pard\sa200\sl276\slmult1\par
+ALTER TABLE [Producto] ADD CONSTRAINT [Relationship9] FOREIGN KEY ([id_proveedor]) REFERENCES [Proveedor] ([id_proveedor]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Detalle_venta] ADD CONSTRAINT [Relationship14] FOREIGN KEY ([Id_producto]) REFERENCES [Producto] ([Id_producto]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+ALTER TABLE [Venta] ADD CONSTRAINT [Relationship19] FOREIGN KEY ([n_factura]) REFERENCES [Factura] ([n_factura]) ON UPDATE NO ACTION ON DELETE NO ACTION\par
+go\par
+\par
+\par
+\par
+\par
+\par
+\tab\tab\tab\fs48 Procedimiento almacenado\fs22\par
+\par
+\cf1 1\cf0 .-CREATE PROCEDURE intCiudad @id_ciu int, @nombre varchar(50), @estado varchar(2)\par
+AS\par
+INSERT INTO CIUDAD VALUES(@id_ciu,@nombre,@estado)\par
+go\par
+\cf1 2\cf0 .-CREATE PROCEDURE intComuna @id_com int,@id_ciu int, @nombre varchar(50), @estado varchar(2)\par
+AS\par
+INSERT INTO COMUNA VALUES(@id_com,@id_ciu ,@nombre,@estado)\par
+go\par
+\cf1 3\cf0 .-CREATE PROCEDURE intContacto @rut_con varchar(20),@rut_cli varchar(12),@rut_em varchar(20), @nombre varchar(100), @email varchar(100),@descripcion varchar(100),@estado varchar(2)\par
+AS\par
+INSERT INTO CONTACTO VALUES(@rut_con,@rut_cli,@rut_em, @nombre, @email,@descripcion,@estado)\par
+go\par
+\cf1 4\cf0 .-CREATE PROCEDURE intCliente @rut_cli varchar(12),@id_comuna int, @nombre varchar(50),@ap_paterno  varchar(50),@ap_materno  varchar(50),@direccion  varchar(100),@n_direccion  varchar(10), @email varchar(100),@jerarquia varchar(1),@estado varchar(2)\par
+AS\par
+INSERT INTO CLIENTE VALUES (@rut_cli,@id_comuna, @nombre,@ap_paterno,@ap_materno  ,@direccion,@n_direccion, @email,@jerarquia,@estado)\par
+go\par
+\cf1 5\cf0 .-CREATE PROCEDURE intEmpresa @rut_em varchar(20),@id_comuna int, @nombre varchar(100),@n_fantacia  varchar(100),@direccion  varchar(100),@n_direccion  varchar(10), @email varchar(100),@jerarquia varchar(1),@estado varchar(2)\par
+AS\par
+INSERT INTO EMPRESA VALUES (@rut_em,@id_comuna, @nombre,@n_fantacia,@direccion  ,@n_direccion, @email,@jerarquia,@estado)\par
+go\par
+\cf1 6\cf0 .-CREATE PROCEDURE intVenta  @n_venta int, @rut_em varchar(20),@rut_cli varchar(12),@n_boleta int,@n_factura int,@estado varchar(2),@fecha_compra Date,@tipo_de_pago varchar(50)\par
+AS\par
+INSERT INTO VENTA VALUES (@n_venta, @rut_em,@rut_cli,@n_boleta,@n_factura,@estado,@fecha_compra,@tipo_de_pago)\par
+go\par
+\cf1 7\cf0 .-CREATE PROCEDURE intBoleta  @n_boleta int\par
+AS\par
+INSERT INTO BOLETA VALUES (@n_boleta)\par
+go\par
+\cf1 8\cf0 .-CREATE PROCEDURE intFactura  @n_factura int\par
+AS\par
+INSERT INTO FACTURA VALUES (@n_factura)\par
+go\par
+\cf1 9\cf0 .-CREATE PROCEDURE intProveedor  @id_proveedor int, @nombre varchar(100),@direccion varchar(100),@estado varchar(2)\par
+AS\par
+INSERT INTO PROVEEDOR VALUES (@id_proveedor, @nombre,@direccion,@estado)\par
+go\par
+\cf1 10\cf0 .-CREATE PROCEDURE intProducto @id_producto int,  @id_proveedor int, @nombre varchar(50),@precio int,@stock int,@estado varchar(2)\par
+AS\par
+INSERT INTO PRODUCTO VALUES  @id_producto,  @id_proveedor, @nombre,@precio,@stock ,@estado)\par
+go\par
+\cf1 11\cf0 .-CREATE PROCEDURE intDeta_venta @id_producto int,  @id_venta int, @cantidad int,@precio int,@estado varchar(2)\par
+AS\par
+INSERT INTO PRODUCTO VALUES  (@id_producto,  @id_venta, @cantidad,@precio,@estado)\par
+go\par
+-----------------------------------------------MODIFICAR---------------------------------------------------\par
+\cf1 1\cf0 .-CREATE PROCEDURE modCiudad @id_ciu int, @nombre varchar(50), @estado varchar(2)\par
+AS\par
+UPDATE CIUDAD SET nombre=@nombre,estado=@estado WHERE id_ciudad\lang13322 =@id_ciudad\lang10\par
+go\par
+\cf1 2\cf0 .-CREATE PROCEDURE modComuna @id_com int,@id_ciu int, @nombre varchar(50), @estado varchar(2)\par
+AS\par
+UPDATE COMUNA SET id_ciudad=@id_ciu,nombre=@nombre,estado=@estado WHERE id_comuna=@id_com\par
+go\par
+\cf1 3\cf0 .-CREATE PROCEDURE modContacto @rut_con varchar(20),@rut_cli varchar(12),@rut_em varchar(20), @nombre varchar(100), @email varchar(100),@descripcion varchar(100),@estado varchar(2)\par
+AS\par
+UPDATE CONTACTO SET rut_cli=@rut_cli,rut_em=@rut_em,nombre= @nombre,email= @email,descripcion=@descripcion,estado=@estado WHERE rut_con=@rut_con\par
+go\par
+\cf1 4\cf0 .-CREATE PROCEDURE modCliente @rut_cli varchar(12),@id_comuna int, @nombre varchar(50),@ap_paterno  varchar(50),@ap_materno  varchar(50),@direccion  varchar(100),@n_direccion  varchar(10), @email varchar(100),@jerarquia varchar(1),@estado varchar(2)\par
+AS\par
+UPDATE CLIENTE SET id_comuna=@id_comuna, nombre=@nombre,ap_paterno=@ap_paterno,ap_materno=@ap_materno  ,direccion=@direccion,n_direccion=@n_direccion,email= @email,jerarquia=@jerarquia,estado=@estado WHERE rut_cli=@rut_cli\par
+go\par
+\cf1 5\cf0 .-CREATE PROCEDURE modEmpresa @rut_em varchar(20),@id_comuna int, @nombre varchar(100),@n_fantacia  varchar(100),@direccion  varchar(100),@n_direccion  varchar(10), @email varchar(100),@jerarquia varchar(1),@estado varchar(2)\par
+AS\par
+UPDATE EMPRESA SET id_comuna=@id_comuna,nombre= @nombre,n_fantacia=@n_fantacia,dreccion=@direccion  ,n_direccion=@n_direccion, email=@email,jerarquia=@jerarquia,estado=@estado WHERE rut_em=@rut_em\par
+go\par
+\cf1 6\cf0 .-CREATE PROCEDURE modVenta  @n_venta int, @rut_em varchar(20),@rut_cli varchar(12),@n_boleta int,@n_factura int,@estado varchar(2),@fecha_compra Date,@tipo_de_pago varchar(50)\par
+AS\par
+UPDATE VENTA SET rut_em=@rut_em,rut_cli=@rut_cli,n_boleta=@n_boleta,n_factura=@n_factura,estado=@estado,fecha_compra=@fecha_compra,tipo_de_pago=@tipo_de_pago WHERE n_venta=@n_venta\par
+go\par
+\cf1 7\cf0 .-CREATE PROCEDURE modProveedor  @id_proveedor int, @nombre varchar(100),@direccion varchar(100),@estado varchar(2)\par
+AS\par
+UPDATE PROVEEDOR SET nombre= @nombre,direccion=@direccion,estado=@estado WHERE id_proveedor = @id_proveedor\par
+go\par
+\cf1 8\cf0 .-CREATE PROCEDURE modProducto @id_producto int,  @id_proveedor int, @nombre varchar(50),@precio int,@stock int,@estado varchar(2)\par
+AS\par
+UPDATE PRODUCTO SET  id_proveedor= @id_proveedor,nombre= @nombre,precio=@precio,stock=@stock ,estado=@estado WHERE id_producto=@id_producto\par
+go\par
+\cf1 9\cf0 .-CREATE PROCEDURE modDeta_venta @id_producto int,  @id_venta int, @cantidad int,@precio int,@estado varchar(2)\par
+AS\par
+UPDATE PRODUCTO SET cantidad= @cantidad,precio=@precio,estado=@estado WHERE id_producto=@id_producto AND id_venta = @id_venta\par
+go\par
+\par
+-----------------------------------------------ELIMINAR---------------------------------------------------\par
+\cf1 1\cf0 .-CREATE PROCEDURE elimCiudad @id_ciu int\par
+AS\par
+UPDATE CIUDAD SET estado="no" WHERE id_ciudad\lang13322 =@id_ciudad\lang10\par
+go\par
+\cf1 2\cf0 .-CREATE PROCEDURE eliComuna @id_com int\par
+AS\par
+UPDATE COMUNA SET estado="no" WHERE id_comuna=@id_com\par
+go\par
+\cf1 3\cf0 .-CREATE PROCEDURE elimContacto @rut_con varchar(20)\par
+AS\par
+UPDATE CONTACTO SET estado="no" WHERE rut_con=@rut_con\par
+go\par
+\cf1 4\cf0 .-CREATE PROCEDURE elimCliente @rut_cli varchar(12)\par
+AS\par
+UPDATE CLIENTE SET estado="no" WHERE rut_cli=@rut_cli\par
+go\par
+\cf1 5\cf0 .-CREATE PROCEDURE eliEmpresa @rut_em varchar(20) \par
+AS\par
+UPDATE EMPRESA SET estado="no" WHERE rut_em=@rut_em\par
+go\par
+\cf1 6\cf0 .-CREATE PROCEDURE eliVenta  @n_venta int\par
+AS\par
+UPDATE VENTA SET estado="no" WHERE n_venta=@n_venta\par
+go\par
+\cf1 7\cf0 .-CREATE PROCEDURE eliProveedor  @id_proveedor int\par
+AS\par
+UPDATE PROVEEDOR SET estado="no" WHERE id_proveedor = @id_proveedor\par
+go\par
+\cf1 8\cf0 .-CREATE PROCEDURE eliProducto @id_producto int\par
+AS\par
+UPDATE PRODUCTO SET  estado="no" WHERE id_producto=@id_producto\par
+go\par
+\cf1 9\cf0 .-CREATE PROCEDURE eliDeta_venta @id_producto int,  @id_venta int\par
+AS\par
+UPDATE PRODUCTO SET estado="no" WHERE id_producto=@id_producto AND id_venta = @id_venta\par
+go\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+}
+ 
